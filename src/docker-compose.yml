@@ -4,15 +4,35 @@ services:
   client:
     build: ./nginx
     ports:
-      - 8000:80
+      - "8000:80"
     depends_on:
       - django_server
       - go_server
 
   django_server:
-    build: ./django
+    build: ./django  # use Dockerfile to build custom image
     # TODO PART 1
+    deploy:
+      replicas: ${DJANGO_REPLICAS}
+      resources:
+        limits:  # max amount of resources the service can use
+          cpus: ${MAX_DJANGO_CPU}
+          memory: ${MAX_DJANGO_MEMORY}
+        reservations:  # guaranteed amount of resources for the service
+          cpus: '0.2'
+          memory: '256M'
 
   go_server:
-    build: ./go
+    build: ./go  # use Dockerfile to build custom image
     # TODO PART 2
+    deploy:
+      replicas: ${GO_REPLICAS}
+      resources:
+        limits:  # max amount of resources the service can use
+          cpus: ${MAX_GO_CPU}
+          memory: ${MAX_GO_MEMORY}
+        reservations:  # guaranteed amount of resources for the service
+          cpus: '0.5'
+          memory: '512M'
+
+#DJANGO_SERVER_REPLICAS=3 GO_SERVER_REPLICAS=2 docker-compose up
