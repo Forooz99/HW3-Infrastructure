@@ -13,25 +13,25 @@ services:
     build: ./django  # use Dockerfile to build custom image
     # TODO PART 1
     deploy:
-      replicas: ${DJANGO_REPLICAS}
+      replicas: ${DJANGO_SERVER_REPLICAS}  # number of containers running for this service at any given time
       resources:
         limits:  # max amount of resources the service can use
-          cpus: ${MAX_DJANGO_CPU}
-          memory: ${MAX_DJANGO_MEMORY}
+          cpus: ${MAX_DJANGO_SERVER_CPU}
+          memory: ${MAX_DJANGO_SERVER_MEMORY}
         reservations:  # guaranteed amount of resources for the service
           cpus: '0.2'
           memory: '256M'
 
   go_server:
-    build: ./go  # use Dockerfile to build custom image
+    build: ./go
     # TODO PART 2
     deploy:
-      replicas: ${GO_REPLICAS}
+      replicas: ${GO_SERVER_REPLICAS}
       resources:
-        limits:  # max amount of resources the service can use
-          cpus: ${MAX_GO_CPU}
-          memory: ${MAX_GO_MEMORY}
-        reservations:  # guaranteed amount of resources for the service
+        limits:
+          cpus: ${MAX_GO_SERVER_CPU}
+          memory: ${MAX_GO_SERVER_MEMORY}
+        reservations:
           cpus: '0.5'
           memory: '512M'
 
