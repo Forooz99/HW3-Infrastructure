@@ -11,7 +11,7 @@ COPY . .
 
 # Build the Go application
 # This will download the dependencies, tidy the go.mod file, and compile the executable
-RUN go mod download
+RUN GOPROXY="https://goproxy.io" go mod download
 RUN go mod tidy
 RUN go build -o main .
 
