@@ -9,6 +9,17 @@ services:
       - django_server
       - go_server
 
+  
+  locust:
+    build: ./locust
+    ports:
+      - "8089:8089"
+    environment:
+      - LOCUST_HOST=http://client
+    depends_on:
+      - client
+
+
   django_server:
     build: ./django  # use Dockerfile to build custom image
     # TODO PART 1
