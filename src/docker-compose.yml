@@ -30,8 +30,8 @@ services:
           cpus: ${MAX_DJANGO_SERVER_CPU}
           memory: ${MAX_DJANGO_SERVER_MEMORY}
         reservations:  # guaranteed amount of resources for the service
-          cpus: '0.2'
-          memory: '256M'
+          cpus: '0.5'
+          memory: '512M'
 
   go_server:
     build: ./go
